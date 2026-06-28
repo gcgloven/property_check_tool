@@ -5,3 +5,5 @@ export * from "./mortgage";
 export * from "./downPayment";
 export * from "./progressivePayment";
 export * from "./projection";
+
+export * from "./downpaymentSavingProjection";

@@ -36,6 +36,13 @@ const tools = [
     badge: "Tool",
     ready: true,
   },
+  {
+    href: "/downpayment-saving-projection",
+    title: "Downpayment Saving Projection",
+    desc: "Plan your resale purchase savings. Adjust property, CPF, cash, and monthly savings to see how long until you can afford the down payment.",
+    badge: "Tool",
+    ready: true,
+  },
 ];
 
 export default function Home() {
@@ -50,7 +57,7 @@ export default function Home() {
         </h1>
         <p className="mt-3 max-w-2xl text-slate-600">
           Model cashflow, compare buying resale vs a new launch, and see the true cost of
-          ownership — with every assumption adjustable. Estimates only, not financial advice.
+          ownership 锟?with every assumption adjustable. Estimates only, not financial advice.
         </p>
       </header>
 
@@ -78,7 +85,7 @@ export default function Home() {
       </section>
 
       <footer className="mt-12 text-xs text-slate-400">
-        v0.0.0 — foundation scaffold. Calculation engine in <code>src/lib/finance</code>.
+        v0.0.0 锟?foundation scaffold. Calculation engine in <code>src/lib/finance</code>.
       </footer>
     </main>
   );

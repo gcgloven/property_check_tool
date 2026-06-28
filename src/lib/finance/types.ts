@@ -86,7 +86,7 @@ export interface NewLaunchSummary {
   /** Gross rental yield at TOP (annual rent / price at TOP). */
   rentalYieldAtTop: number;
   loanAmount: number;
-  /** Total rent paid while renting until TOP (current rent × months to TOP). */
+  /** Total rent paid while renting until TOP (current rent 脳 months to TOP). */
   totalRentUntilTop: number;
   /** What the buyer does with the unit after TOP. */
   postTopMode: HoldingMode;
@@ -168,4 +168,89 @@ export interface ValidationIssue {
 export interface ValidationResult {
   valid: boolean;
   issues: ValidationIssue[];
+}
+
+
+// ── Downpayment Saving Projection types ──────────────────────────
+
+/** A buyer in the downpayment saving projection (tracks savings, not property count). */
+export interface SavingBuyer {
+  name: string;
+  currentCpf: number;
+  currentCashSavings: number;
+  extraSavings: number;
+  monthlyCpfContribution: number;
+  monthlyCashSaving: number;
+}
+
+/** Resale payment timeline assumptions. */
+export interface TimelineInputs {
+  optionFeePercent: number;
+  exerciseFeePercent: number;
+  otpExerciseDays: number;
+  stampDutyDueDaysAfterExercise: number;
+  completionWeeksAfterExercise: number;
+}
+
+export type ScenarioName = "conservative" | "baseCase" | "stretched";
+
+export interface ScenarioOverrides {
+  completionWeeksAfterExercise: number;
+  legalFee: number;
+}
+
+/** Property inputs for the downpayment saving projection. */
+export interface DownpaymentSavingPropertyInputs {
+  squareFeet: number;
+  psf: number;
+  manualPropertyValueEnabled: boolean;
+  manualPropertyValue: number;
+  downpaymentPercent: number;
+  legalFee: number;
+}
+
+/** Full persisted state for the Downpayment Saving Projection. */
+export interface DownpaymentSavingState {
+  property: DownpaymentSavingPropertyInputs;
+  buyers: SavingBuyer[];
+  timeline: TimelineInputs;
+  scenario: ScenarioName;
+}
+
+/** One row in the payment stage timeline. */
+export interface PaymentStage {
+  stage: string;
+  day: number;
+  amount: number;
+  description: string;
+}
+
+/** One row in the cashflow readiness table. */
+export interface CashflowReadinessRow {
+  stage: string;
+  availableFunds: number;
+  cumulativePaymentDue: number;
+  surplusOrDeficit: number;
+  status: "Ready" | "Not Ready";
+}
+
+/** All computed outputs from the downpayment saving engine. */
+export interface DownpaymentSavingOutput {
+  propertyValue: number;
+  downpayment: number;
+  stampDuty: number;
+  legalFee: number;
+  totalPaymentNeeded: number;
+  combinedAvailableFunds: number;
+  currentDeficit: number;
+  combinedMonthlyCpf: number;
+  combinedMonthlyCashSaving: number;
+  combinedMonthlyAccumulation: number;
+  monthsNeeded: number;
+  paymentStages: PaymentStage[];
+  cashflowReadiness: CashflowReadinessRow[];
+  /** Whether the manual property value differs from sqft × psf. */
+  hasPropertyValueMismatch: boolean;
+  /** The computed value from sqft × psf (for the mismatch warning). */
+  computedPropertyValue: number;
 }
