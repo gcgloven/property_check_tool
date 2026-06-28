@@ -40,6 +40,8 @@ const defaultTimeline: TimelineInputs = {
 
 const buyerA: SavingBuyer = {
   name: "Person A",
+  profile: "citizen",
+  propertyCount: 1,
   currentCpf: 55370.02,
   currentCashSavings: 10000,
   extraSavings: 100000,
@@ -49,6 +51,8 @@ const buyerA: SavingBuyer = {
 
 const buyerB: SavingBuyer = {
   name: "Person B",
+  profile: "citizen",
+  propertyCount: 1,
   currentCpf: 57960.68,
   currentCashSavings: 123842.82,
   extraSavings: 70000,
@@ -194,6 +198,8 @@ describe("calculateCashflowReadiness", () => {
     const buyers: SavingBuyer[] = [
       {
         name: "Person A",
+        profile: "citizen",
+        propertyCount: 1,
         currentCpf: 55370.02,
         currentCashSavings: 10000,
         extraSavings: 100000,
@@ -202,6 +208,8 @@ describe("calculateCashflowReadiness", () => {
       },
       {
         name: "Person B",
+        profile: "citizen",
+        propertyCount: 1,
         currentCpf: 57960.68,
         currentCashSavings: 123842.82,
         extraSavings: 70000,
@@ -250,7 +258,7 @@ describe("applyScenarioOverrides", () => {
   });
 });
 
-describe("computeDownpaymentSaving 鈥?scenario switching", () => {
+describe("computeDownpaymentSaving 闁?scenario switching", () => {
   it("conservative scenario overrides legal fee and completion weeks", () => {
     const state = defaultState({ scenario: "conservative" });
     const o = computeDownpaymentSaving(state);
@@ -260,7 +268,7 @@ describe("computeDownpaymentSaving 鈥?scenario switching", () => {
   });
 });
 
-describe("computeDownpaymentSaving 鈥?property mismatch flag", () => {
+describe("computeDownpaymentSaving 闁?property mismatch flag", () => {
   it("flags mismatch when manual differs from sqft*psf", () => {
     const state = defaultState();
     const o = computeDownpaymentSaving(state);

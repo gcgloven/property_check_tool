@@ -1,4 +1,4 @@
-import { calcBSD } from "./stampDuty";
+import { calcABSDForBuyers, calcBSD } from "./stampDuty";
 import type {
   CashflowReadinessRow,
   DownpaymentSavingOutput,
@@ -37,7 +37,7 @@ export function calculatePropertyValue(inputs: DownpaymentSavingPropertyInputs):
   return inputs.squareFeet * inputs.psf;
 }
 
-/** Computed value from sqft 鑴?psf (regardless of manual toggle). */
+/** Computed value from sqft 閼?psf (regardless of manual toggle). */
 export function computeSqftTimesPsf(inputs: DownpaymentSavingPropertyInputs): number {
   return inputs.squareFeet * inputs.psf;
 }
@@ -170,7 +170,9 @@ export function computeDownpaymentSaving(state: DownpaymentSavingState): Downpay
   const propertyValue = calculatePropertyValue(state.property);
   const computedPropertyValue = computeSqftTimesPsf(state.property);
   const downpayment = calculateDownpayment(propertyValue, state.property.downpaymentPercent);
-  const stampDuty = calcBSD(propertyValue);
+  // ABSD uses the highest applicable rate among all buyers (joint purchase rule).
+  const absdBuyers = state.buyers.map((b) => ({ profile: b.profile, propertyCount: b.propertyCount, cash: 0, cpf: 0 }));
+  const stampDuty = calcBSD(propertyValue) + calcABSDForBuyers(propertyValue, absdBuyers);
   const overrides = applyScenarioOverrides(
     state.scenario,
     state.property.legalFee,

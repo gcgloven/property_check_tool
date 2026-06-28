@@ -86,7 +86,7 @@ export interface NewLaunchSummary {
   /** Gross rental yield at TOP (annual rent / price at TOP). */
   rentalYieldAtTop: number;
   loanAmount: number;
-  /** Total rent paid while renting until TOP (current rent 脳 months to TOP). */
+  /** Total rent paid while renting until TOP (current rent 鑴?months to TOP). */
   totalRentUntilTop: number;
   /** What the buyer does with the unit after TOP. */
   postTopMode: HoldingMode;
@@ -171,11 +171,14 @@ export interface ValidationResult {
 }
 
 
-// ── Downpayment Saving Projection types ──────────────────────────
+// 鈹€鈹€ Downpayment Saving Projection types 鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€
 
 /** A buyer in the downpayment saving projection (tracks savings, not property count). */
 export interface SavingBuyer {
   name: string;
+  profile: BuyerProfile;
+  /** The nth residential property this purchase represents for this buyer (drives ABSD). */
+  propertyCount: 1 | 2 | 3;
   currentCpf: number;
   currentCashSavings: number;
   extraSavings: number;
@@ -249,8 +252,8 @@ export interface DownpaymentSavingOutput {
   monthsNeeded: number;
   paymentStages: PaymentStage[];
   cashflowReadiness: CashflowReadinessRow[];
-  /** Whether the manual property value differs from sqft × psf. */
+  /** Whether the manual property value differs from sqft 脳 psf. */
   hasPropertyValueMismatch: boolean;
-  /** The computed value from sqft × psf (for the mismatch warning). */
+  /** The computed value from sqft 脳 psf (for the mismatch warning). */
   computedPropertyValue: number;
 }

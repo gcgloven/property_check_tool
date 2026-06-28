@@ -10,6 +10,8 @@ import type {
 function makeSavingBuyer(name: string): SavingBuyer {
   return {
     name,
+    profile: "citizen",
+    propertyCount: 1,
     currentCpf: 0,
     currentCashSavings: 0,
     extraSavings: 0,
@@ -38,6 +40,8 @@ const defaultTimeline: TimelineInputs = {
 const defaultBuyers: SavingBuyer[] = [
   {
     name: "Person A",
+    profile: "citizen",
+    propertyCount: 1,
     currentCpf: 60000,
     currentCashSavings: 15000,
     extraSavings: 80000,
@@ -46,6 +50,8 @@ const defaultBuyers: SavingBuyer[] = [
   },
   {
     name: "Person B",
+    profile: "citizen",
+    propertyCount: 1,
     currentCpf: 50000,
     currentCashSavings: 100000,
     extraSavings: 50000,

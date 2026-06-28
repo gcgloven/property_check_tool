@@ -324,7 +324,7 @@ export default function DownpaymentSavingPage() {
           <div className="grid grid-cols-2 gap-4">
             <SummaryCard label="Property Value" value={output.propertyValue} />
             <SummaryCard label="Downpayment" value={output.downpayment} />
-            <SummaryCard label="Stamp Duty (BSD)" value={output.stampDuty} />
+            <SummaryCard label="Stamp Duty (BSD + ABSD)" value={output.stampDuty} />
             <SummaryCard label="Legal Fee" value={output.legalFee} />
             <SummaryCard label="Total Payment Needed" value={output.totalPaymentNeeded} strong />
             <SummaryCard label="Combined Available Funds" value={output.combinedAvailableFunds} />
