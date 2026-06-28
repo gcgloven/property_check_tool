@@ -1,133 +1,106 @@
 ﻿# Property Check Tool
 
-A Singapore property investment decision-support web app. Model cashflow,
+An open-source Singapore property investment calculator. Model cashflow,
 compare buying resale vs a new launch, estimate stamp duty and down payments,
 and project your savings timeline — with every assumption adjustable.
 
-**Estimates only, not financial advice.**
+**[Live Demo](#)** · **Estimates only, not financial advice.**
+
+---
+
+## Features
+
+- **Resale Cashflow** — Buy an existing property today. Project up to 30 years of self-stay vs rent-out with adjustable appreciation and rental growth.
+- **New Launch / BUC** — Buy a building-under-construction project. See current down payment needed, estimated price at TOP, and post-TOP cashflow.
+- **Down Payment Estimator** — Up to 2 buyers, each with CPF and cash. Joint ABSD (highest rate), BSD, total upfront, and SG rule validation.
+- **Stamp Duty Calculator** — BSD + ABSD with Singapore tiered rates, single or joint buyers.
+- **Mortgage Calculator** — Monthly instalment and amortization schedule.
+- **Downpayment Saving Projection** — Plan your savings timeline. Simulate resale payment stages and check cashflow readiness at each stage.
 
 ---
 
 ## Tech Stack
 
-- **Next.js 15** (App Router)
-- **TypeScript**
-- **Redux Toolkit** + redux-persist (localStorage)
-- **Tailwind CSS v4**
-- **Recharts** (charts)
-- **Vitest** (tests)
+| Layer | Technology |
+|-------|-----------|
+| Framework | Next.js 15 (App Router) |
+| Language | TypeScript |
+| State | Redux Toolkit + redux-persist |
+| Styling | Tailwind CSS v4 |
+| Charts | Recharts |
+| Testing | Vitest |
 
 ---
 
-## Tools
-
-| Tool | Route |
-|------|-------|
-| Resale Cashflow (Story 1) | `/resale` |
-| New Launch / BUC (Story 2) | `/new-launch` |
-| Down Payment Estimator | `/tools/down-payment` |
-| Stamp Duty Calculator | `/tools/stamp-duty` |
-| Mortgage Calculator | `/tools/mortgage` |
-| Downpayment Saving Projection | `/downpayment-saving-projection` |
-
----
-
-## Getting Started (Local)
+## Getting Started
 
 ```bash
-# Install dependencies
+git clone https://github.com/gcgloven/property_check_tool.git
+cd property_check_tool
 npm install
-
-# Start the dev server
 npm run dev
-# → http://localhost:3000
+```
 
-# Run tests
-npm run test
+Open [http://localhost:3000](http://localhost:3000).
 
-# Type check
-npm run typecheck
-
-# Production build
-npm run build
+```
+npm run test       # Run the test suite
+npm run typecheck  # TypeScript check
+npm run build      # Production build
 ```
 
 ---
 
-## Deploy to Vercel
+## Architecture
 
-This project is built with Next.js and works out of the box on
-[Vercel](https://vercel.com).
-
-### Option 1 — Vercel Dashboard (easiest)
-
-1. Push this repo to GitHub, GitLab, or Bitbucket.
-2. Go to [vercel.com/new](https://vercel.com/new) and import the repository.
-3. Vercel auto-detects Next.js — no configuration needed.
-4. Click **Deploy**.
-
-### Option 2 — Vercel CLI
-
-```bash
-# Install the Vercel CLI
-npm i -g vercel
-
-# Link the project (one-time)
-vercel link
-
-# Deploy to preview
-vercel
-
-# Deploy to production
-vercel --prod
-```
-
-### Build settings (auto-detected)
-
-| Setting | Value |
-|---------|-------|
-| Framework | Next.js |
-| Build Command | `next build` |
-| Output Directory | `.next` |
-| Install Command | `npm install` |
-
-### Environment variables
-
-No environment variables are required for the app to run. If you add
-API keys or secrets later, set them in the Vercel dashboard under
-**Settings → Environment Variables**.
-
----
-
-## Project Structure
+All financial calculations live in `src/lib/finance/` as **pure, unit-tested
+functions** with no framework dependency. This keeps the model transparent,
+auditable, and usable independently of the UI.
 
 ```
-docs/           ← version logs, documentation (not deployed)
 src/
-  app/          ← Next.js App Router pages
-  components/   ← shared React components (charts, UI primitives)
-  lib/finance/  ← pure calculation engine (Singapore rules)
-  store/        ← Redux Toolkit slices + persist config
+├── app/            Next.js App Router pages
+├── components/     Shared React components (charts, UI primitives)
+├── lib/finance/    Pure calculation engine (Singapore rules)
+└── store/          Redux Toolkit slices + persist config
+docs/               Version history and documentation
 ```
-
-All finance math lives in `src/lib/finance/` as pure, unit-tested
-functions with no React or Redux dependency.
 
 ---
 
-## Security Notes
+## Deploy
 
-- `.env*` files are gitignored — never commit secrets.
-- The `docs/`, `.agents/`, `skills/` directories are excluded from
-  deployment (listed in `.gitignore`).
-- All calculations run client-side; no server-side secrets are needed.
+This is a standard Next.js app. Deploy anywhere that supports Node.js:
+
+- **Vercel** — Import the repo, auto-detects Next.js, no configuration needed.
+- **Netlify** — Use the Next.js build plugin.
+- **Docker** — Build with `next build && next start`.
+
+See [Next.js deployment docs](https://nextjs.org/docs/app/building-your-application/deploying) for alternatives.
+
+---
+
+## Contributing
+
+Issues and pull requests are welcome. The Singapore property rules
+(stamp duty rates, LTV limits, progressive payment schedules) are kept as
+editable constants in `src/lib/finance/constants.ts` — if you notice a
+policy change, that's the file to update.
+
+Before opening a PR:
+- Run `npm run test` to ensure all tests pass.
+- Run `npm run typecheck` for a clean TypeScript build.
 
 ---
 
 ## Disclaimer
 
-This tool provides estimates based on Singapore property rules
-(stamp duty rates, LTV limits, progressive payment schedules).
-Actual figures depend on bank approval, valuation, CPF rules, and
-prevailing policy. This is **not financial advice**.
+This tool provides estimates based on publicly documented Singapore
+property rules. Actual figures depend on bank approval, valuation,
+CPF policies, and prevailing law. This is **not financial advice**.
 
+---
+
+## License
+
+[MIT](LICENSE)
