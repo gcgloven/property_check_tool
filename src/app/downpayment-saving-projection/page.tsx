@@ -2,9 +2,10 @@
 
 import Link from "next/link";
 import { useMemo } from "react";
-import { Card, Field, NumberInput, formatSGD } from "@/components/ui";
+import { Card, Field, NumberInput, Select, formatSGD } from "@/components/ui";
 import {
   computeDownpaymentSaving,
+  type BuyerProfile,
   type ScenarioName,
 } from "@/lib/finance";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
@@ -17,6 +18,18 @@ import {
   setTimelineField,
   updateBuyer,
 } from "@/store/slices/downpaymentSavingSlice";
+
+const PROFILE_OPTIONS: ReadonlyArray<{ value: BuyerProfile; label: string }> = [
+  { value: "citizen", label: "SG Citizen" },
+  { value: "pr", label: "SG PR" },
+  { value: "foreigner", label: "Foreigner" },
+];
+
+const COUNT_OPTIONS = [
+  { value: "1", label: "1st property" },
+  { value: "2", label: "2nd property" },
+  { value: "3", label: "3rd+ property" },
+] as const;
 
 const SCENARIO_OPTIONS: ReadonlyArray<{ value: ScenarioName; label: string; desc: string }> = [
   { value: "conservative", label: "Conservative", desc: "8-week completion, S$8k legal" },
@@ -135,6 +148,29 @@ export default function DownpaymentSavingPage() {
                     value={buyer.name}
                     onChange={(e) => dispatch(updateBuyer({ index: i, patch: { name: e.target.value } }))}
                     className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
+                  />
+                </Field>
+                <Field label="Citizenship">
+                  <Select
+                    value={buyer.profile}
+                    onChange={(profile) =>
+                      dispatch(updateBuyer({ index: i, patch: { profile } }))
+                    }
+                    options={PROFILE_OPTIONS}
+                  />
+                </Field>
+                <Field label="Property count" hint="drives ABSD">
+                  <Select
+                    value={String(buyer.propertyCount) as "1" | "2" | "3"}
+                    onChange={(v) =>
+                      dispatch(
+                        updateBuyer({
+                          index: i,
+                          patch: { propertyCount: Number(v) as 1 | 2 | 3 },
+                        }),
+                      )
+                    }
+                    options={COUNT_OPTIONS}
                   />
                 </Field>
                 <Field label="Current CPF">
