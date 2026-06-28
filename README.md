@@ -1,10 +1,10 @@
-﻿# Property Check Tool
+# Property Check Tool
 
 An open-source Singapore property investment calculator. Model cashflow,
 compare buying resale vs a new launch, estimate stamp duty and down payments,
 and project your savings timeline — with every assumption adjustable.
 
-**[Live Demo](#)** · **Estimates only, not financial advice.**
+**[Live Demo](https://property-check-tool.vercel.app/)** · **Estimates only, not financial advice.**
 
 ---
 
