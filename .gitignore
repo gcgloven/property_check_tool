@@ -53,3 +53,8 @@ logs
 .DS_Store
 Thumbs.db
 *.swp
+# ---- Codex / Agent dev tools (do not deploy) ----
+.agents/
+skills/
+skills-lock.json
+
