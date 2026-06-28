@@ -27,7 +27,7 @@ const rootReducer = combineReducers({
 
 const persistConfig = {
   key: "property-check-tool",
-  version: 0,
+  version: 1,
   storage,
   whitelist: ["resale", "newLaunch", "settings", "purchase", "downpaymentSaving"],
 };
